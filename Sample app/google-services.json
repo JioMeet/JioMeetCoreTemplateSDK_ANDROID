@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "629401416653",
+    "firebase_url": "https://jiomeetapp.firebaseio.com",
+    "project_id": "jiomeetapp",
+    "storage_bucket": "jiomeetapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629401416653:android:17bac6b0f4fe679c",
+        "android_client_info": {
+          "package_name": "com.example.sdksampleapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629401416653-0rdbnvfu4pp3fc7qvivn89orfsh606j0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sdksampleapp",
+            "certificate_hash": "e50fc7c32c69e8bdfe5506c9ec3b9d588c6395d3"
+          }
+        },
+        {
+          "client_id": "629401416653-51bmloet2ea4lorl80kg09hj68buv7e1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTUSfYimjy7isbPIie7yEG6DiRIxbcQb0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "629401416653-51bmloet2ea4lorl80kg09hj68buv7e1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

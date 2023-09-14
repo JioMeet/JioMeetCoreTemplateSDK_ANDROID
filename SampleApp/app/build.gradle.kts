@@ -66,7 +66,7 @@ repositories {
     maven {
         credentials {
             username = "user name will be shared by JioMeet team"
-            password = "github token will be shared by JioMeet"
+            username = "user Name will be shared by JioMeet team"
         }
         url = uri("https://maven.pkg.github.com/JioMeet/JioMeetCoreTemplateSDK_ANDROID")
     }

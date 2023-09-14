@@ -7,4 +7,4 @@ pluginManagement {
 }
 
 rootProject.name = "JioMeetNativeSDKAndroid"
-include(":Sample app")
+include(":app")

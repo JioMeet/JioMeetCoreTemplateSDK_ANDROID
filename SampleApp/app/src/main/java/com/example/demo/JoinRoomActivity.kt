@@ -22,67 +22,54 @@ import org.jio.sdk.templates.core.LaunchCore
 @AndroidEntryPoint
 class JoinRoomActivity : ComponentActivity() {
     private val viewModel: AppViewModel by viewModels()
-    private var isUserJoined: Boolean = false
-
-
-
     companion object {
         const val TAG = "RoomActivity"
     }
-
-
     private val jioMeetConnectionListener = object : JioMeetConnectionListener {
         override fun closeWatchParty() {
             finish()
         }
-
         override fun onShareInviteClicked(meetingId: String, meetingPin: String, name: String) {}
-
-
     }
-
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         joinVideoCall()
 
     }
-
-
     private fun joinVideoCall() {
         if (HelperClass.checkPermissionForCorporateUsers(this)) {
 
-                setContent {
-                    LaunchCore(
-                        intent = intent,
-                        jioMeetConnectionListener = jioMeetConnectionListener
-                    )
-                }
+            setContent {
+                LaunchCore(
+                    intent = intent,
+                    jioMeetConnectionListener = jioMeetConnectionListener
+                )
+            }
 
         } else {
             HelperClass.requestPermissionForCorporateUsers(this)
         }
         lifecycleScope.launch {
 
-                        setContent {
-                            val joinCallIntent = Intent()
-                            joinCallIntent.putExtra(
-                                JioMeetSdkManager.MEETING_ID,
-                                viewModel.loginState.value.meetingID
-                            )
-                            joinCallIntent.putExtra(
-                                JioMeetSdkManager.MEETING_PIN,
-                                viewModel.loginState.value.meetingPin
-                            )
-                            joinCallIntent.putExtra(JioMeetSdkManager.GUEST_NAME,
-                              viewModel.loginState.value.userName
-                                )
-
-                            isUserJoined = true
-                            LaunchCore(
-                                intent = joinCallIntent,
-                                jioMeetConnectionListener = jioMeetConnectionListener
-                            )
+            setContent {
+                val joinCallIntent = Intent()
+                joinCallIntent.putExtra(
+                    JioMeetSdkManager.MEETING_ID,
+                    viewModel.loginState.value.meetingID
+                )
+                joinCallIntent.putExtra(
+                    JioMeetSdkManager.MEETING_PIN,
+                    viewModel.loginState.value.meetingPin
+                )
+                joinCallIntent.putExtra(
+                    JioMeetSdkManager.GUEST_NAME,
+                    viewModel.loginState.value.userName
+                )
+                LaunchCore(
+                    intent = joinCallIntent,
+                    jioMeetConnectionListener = jioMeetConnectionListener
+                )
 
             }
         }

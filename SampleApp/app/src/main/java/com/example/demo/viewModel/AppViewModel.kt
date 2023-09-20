@@ -19,24 +19,9 @@ import com.example.demo.model.SetUserName
 import com.example.demo.model.UserNameError
 
 class AppViewModel : ViewModel() {
-
-    companion object {
-        const val TAG = "AppViewModel"
-    }
-
-
     private val _loginState = mutableStateOf(JoinMeetingState())
     val loginState: State<JoinMeetingState> = _loginState
-
     private val _createMeetingViewState = mutableStateOf<CreateMeetingViewState>(JoinMeeting)
-    val createMeetingViewState: State<CreateMeetingViewState> = _createMeetingViewState
-
-    private val _appDataState = mutableStateOf(AppData())
-    val appDataState:State<AppData> = _appDataState
-
-
-
-
     fun onEvent(event: JoinMeetingEvent) {
         _loginState.value = when (event) {
             is SetMeetingID -> loginState.value.copy(meetingID = event.meetingId)
@@ -57,16 +42,6 @@ class AppViewModel : ViewModel() {
             }
         }
     }
-
-    fun onChangeViewEvent(event: CreateMeetingViewEvent) {
-        _createMeetingViewState.value = when(event) {
-            JoinMeetingViewEvent -> {
-                JoinMeeting
-            }
-
-        }
-    }
-
     fun isJoinButtonEnabled(): Boolean {
         if ((loginState.value.meetingID.isEmpty()) || loginState.value.meetingID.length != 10) {
             onEvent(MeetingIDError(true))
@@ -79,12 +54,5 @@ class AppViewModel : ViewModel() {
         }
         return loginState.value.isMeetingIDError.not() && loginState.value.isMeetingPinError.not() && loginState.value.isUserNameError.not()
     }
-
-    fun isUserJoined():Boolean{
-        return loginState.value.isJoinButtonEnabled
-    }
-
-
-
 }
 

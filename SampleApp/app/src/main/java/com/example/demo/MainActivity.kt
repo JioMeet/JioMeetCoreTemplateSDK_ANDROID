@@ -23,7 +23,8 @@ class MainActivity : ComponentActivity() {
         if (uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
-
+        // Calling SDK from Activity as (Component activity)
+        // Passing valid meeting ID and MeetingPin along with user name
         setContent {
             CoreLoginView(onJoinMeetingClick = {
                 val joinCallIntent = Intent(this, JoinRoomActivity::class.java)
@@ -43,7 +44,6 @@ class MainActivity : ComponentActivity() {
             }, viewModel)
 
         }
-
 
     }
 }

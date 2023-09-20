@@ -1,4 +1,4 @@
-package org.jio.sdksampleapp.view.composables.ui.theme
+package com.example.demo.view.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

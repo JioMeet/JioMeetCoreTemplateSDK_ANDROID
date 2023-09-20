@@ -33,8 +33,8 @@ import com.example.demo.model.SetUserName
 import com.example.demo.model.UserNameError
 import com.example.demo.viewModel.AppViewModel
 import com.jio.sdksampleapp.R
-import org.jio.sdksampleapp.view.composables.ui.theme.background
-import org.jio.sdksampleapp.view.composables.ui.theme.buttonBackground
+import com.example.demo.view.ui.theme.background
+import com.example.demo.view.ui.theme.buttonBackground
 
 
 @Composable

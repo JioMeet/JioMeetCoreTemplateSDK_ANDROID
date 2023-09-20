@@ -8,14 +8,14 @@ plugins {
 
 android {
     namespace = "com.jio.sdksampleapp"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.jio.sdksampleapp"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
+        minSdk  = 24
+        targetSdk  = 33
         versionCode = 2
-        versionName = "2.0.1.7"
+        versionName = "2.2.0"
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "JioMeetNativeSampleApp-${versionName}")
     }
@@ -51,7 +51,7 @@ android {
         viewBinding = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+        kotlinCompilerExtensionVersion =  "1.3.2"
     }
     packagingOptions {
         resources {

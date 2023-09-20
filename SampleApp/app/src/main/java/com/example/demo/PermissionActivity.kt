@@ -10,38 +10,39 @@ import com.example.demo.viewModel.AppViewModel
 import org.jio.sdk.common.customview.CustomView
 import org.jio.sdk.common.utilities.Log
 
-class PermissionActivity:ComponentActivity() {
+class PermissionActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (HelperClass.checkPermissionForCorporateUsers(this) && HelperClass.isInternetAvailable(
                 this
             )
-        ){
+        ) {
 
 
-        setContent {
-            CoreLoginView(onJoinMeetingClick = {
-                val joinCallIntent = Intent(this, MainActivity::class.java)
-                startActivity(joinCallIntent)
-            }, viewModel = AppViewModel())
-        }}else {
+            setContent {
+                CoreLoginView(onJoinMeetingClick = {
+                    val joinCallIntent = Intent(this, MainActivity::class.java)
+                    startActivity(joinCallIntent)
+                }, viewModel = AppViewModel())
+            }
+        } else {
             HelperClass.requestPermissionForCorporateUsers(this)
-            Log.d("Main APP","Please check Permission")
+            Log.d("Main APP", "Please check Permission")
         }
     }
 
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
             val joinCallIntent = Intent(this, MainActivity::class.java)
             startActivity(joinCallIntent)
         } else {
-            CustomView.ShowShortToast(applicationContext, " Provide necessary permissions to proceed.")
+            CustomView.ShowShortToast(
+                applicationContext, " Provide necessary permissions to proceed."
+            )
         }
     }
 }

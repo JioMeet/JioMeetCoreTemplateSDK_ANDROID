@@ -15,7 +15,7 @@ android {
         minSdk  = 24
         targetSdk  = 33
         versionCode = 2
-        versionName = "2.2.0"
+        versionName = "2.1.8"
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "JioMeetNativeSampleApp-${versionName}")
     }
@@ -51,7 +51,7 @@ android {
         viewBinding = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion =  "1.3.2"
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
     packagingOptions {
         resources {

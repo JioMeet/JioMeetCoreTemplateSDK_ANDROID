@@ -10,10 +10,11 @@ import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+
 object HelperClass {
 
     fun checkPermissionForCorporateUsers(context: Context): Boolean {
-       return hasPermissions(context, Constant.corporatePermissions)
+        return hasPermissions(context, Constant.corporatePermissions)
     }
 
     fun requestPermissionForCorporateUsers(context: ComponentActivity?) {
@@ -75,6 +76,11 @@ object HelperClass {
 }
 
 object Constant {
-    val corporatePermissions = arrayOf(permission.CAMERA, permission.RECORD_AUDIO,permission.READ_PHONE_STATE, permission.BLUETOOTH_CONNECT)
+    val corporatePermissions = arrayOf(
+        permission.CAMERA,
+        permission.RECORD_AUDIO,
+        permission.READ_PHONE_STATE,
+        permission.BLUETOOTH_CONNECT
+    )
 }
 

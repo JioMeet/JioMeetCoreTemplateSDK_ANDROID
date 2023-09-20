@@ -21,7 +21,6 @@ import com.example.demo.model.UserNameError
 class AppViewModel : ViewModel() {
     private val _loginState = mutableStateOf(JoinMeetingState())
     val loginState: State<JoinMeetingState> = _loginState
-    private val _createMeetingViewState = mutableStateOf<CreateMeetingViewState>(JoinMeeting)
     fun onEvent(event: JoinMeetingEvent) {
         _loginState.value = when (event) {
             is SetMeetingID -> loginState.value.copy(meetingID = event.meetingId)
@@ -42,6 +41,7 @@ class AppViewModel : ViewModel() {
             }
         }
     }
+
     fun isJoinButtonEnabled(): Boolean {
         if ((loginState.value.meetingID.isEmpty()) || loginState.value.meetingID.length != 10) {
             onEvent(MeetingIDError(true))

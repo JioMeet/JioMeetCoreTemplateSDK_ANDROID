@@ -22,21 +22,26 @@ import org.jio.sdk.templates.core.LaunchCore
 @AndroidEntryPoint
 class JoinRoomActivity : ComponentActivity() {
     private val viewModel: AppViewModel by viewModels()
+
     companion object {
         const val TAG = "RoomActivity"
     }
+
     private val jioMeetConnectionListener = object : JioMeetConnectionListener {
         override fun closeWatchParty() {
             finish()
         }
+
         override fun onShareInviteClicked(meetingId: String, meetingPin: String, name: String) {}
     }
+
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         joinVideoCall()
 
     }
+
     private fun joinVideoCall() {
         if (HelperClass.checkPermissionForCorporateUsers(this)) {
 

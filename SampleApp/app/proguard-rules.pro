@@ -72,8 +72,7 @@
 }
 -keep class androidx.lifecycle.*
 -keep class android.view.View.OnClickListener
-############# AGORA ######### START #####
 -keep class io.agora.**{*;}
-############# AGORA ######### END #####
+
 
 

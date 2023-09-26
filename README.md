@@ -24,7 +24,7 @@
 
 In this documentation, we'll guide you through the process of installation, enabling you to enhance your Android app with Jiomeet's real-time communication capabilities swiftly and efficiently.Let's get started on your journey to creating seamless communication experiences with Jiomeet Template UI!
 
-![image info](./images/JioMeetTemplateUi.png)
+![image info](./images/jiomeet_template.png)
 
 ---
 
@@ -43,8 +43,6 @@ In Jiomeet Template UI, you'll find a range of powerful features designed to enh
 5. **Group Conversation**: Easily engage in text-based conversations with multiple participants in one chat group.
 6. **Inspect Call Health**: Monitor the quality and performance of your audio and video calls to ensure a seamless communication experience.
    </br></br>
-
-![image info](./images/Features.png)
 
 ## Prerequisites
 

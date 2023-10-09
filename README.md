@@ -118,7 +118,30 @@ Use the [create meeting api](https://dev.jiomeet.com/docs/JioMeet%20Platform%20S
 
 ## Configure JioMeet Template UI inside your app
 
-i. In Gradle Scripts/build.gradle (Module: <projectname>) add the Template UI dependency. The dependencies section should look like the following:
+i. **Step 1** : Generate a Personal Access Token for GitHub 
+* Settings -> Developer Settings -> Personal Access Tokens -> Generate new token
+* Make sure you select the following scopes (“ read:packages”) and Generate a token
+* After Generating make sure to copy your new personal access token. You cannot see it again! The only option is to generate a new key.
+
+ii.  Update build.gradle inside the application module
+
+```kotlin
+    repositories {
+        maven {
+            credentials {
+                   <!--github user name-->
+                    username = ""
+                 <!--github user token-->
+                    password = ""
+            }
+            url = uri("https://maven.pkg.github.com/JioMeet/JioMeetCoreTemplateSDK_ANDROID")
+        }
+        google()
+        mavenCentral()
+    }
+```
+
+iii. In Gradle Scripts/build.gradle (Module: <projectname>) add the Template UI dependency. The dependencies section should look like the following:
 
 ```gradle
 dependencies {

@@ -7,16 +7,16 @@
 1. [Introduction](#introduction)
 2. [Features](#features)
 3. [Prerequisites](#prerequisites)
-   - [Hilt](#hilt)
-   - [Jetpack Compose](#jetpack-compose)
+    - [Hilt](#hilt)
+    - [Jetpack Compose](#jetpack-compose)
 4. [Setup](#setup)
-   - [Register on JioMeet Platform](#register-on-jiomeet-platform)
-   - [Get Your Application Keys](#get-your-application-keys)
-   - [Get Your JioMeet Meeting ID and PIN](#get-your-jiomeet-meeting-id-and-pin)
+    - [Register on JioMeet Platform](#register-on-jiomeet-platform)
+    - [Get Your Application Keys](#get-your-application-keys)
+    - [Get Your JioMeet Meeting ID and PIN](#get-your-jiomeet-meeting-id-and-pin)
 5. [Configure JioMeet Template UI Inside Your App](#configure-jiomeet-template-ui-inside-your-app)
-   - [Add permissions for network and device access](#add-permissions-for-network-and-device-access)
-   - [Initiliazing Hilt in Application Class](#initialize-hilt-in-application-class)
-   - [Start Your App](#start-your-app)
+    - [Add permissions for network and device access](#add-permissions-for-network-and-device-access)
+    - [Initiliazing Hilt in Application Class](#initialize-hilt-in-application-class)
+    - [Start Your App](#start-your-app)
 6. [Sample App](#sample-app)
 7. [Troubleshooting](#troubleshooting)
 
@@ -24,7 +24,7 @@
 
 In this documentation, we'll guide you through the process of installation, enabling you to enhance your Android app with Jiomeet's real-time communication capabilities swiftly and efficiently.Let's get started on your journey to creating seamless communication experiences with Jiomeet Template UI!
 
-![image info](./images/jiomeet_template.png)
+![image info](./images/JioMeetTemplateUi.png)
 
 ---
 
@@ -43,6 +43,9 @@ In Jiomeet Template UI, you'll find a range of powerful features designed to enh
 5. **Group Conversation**: Easily engage in text-based conversations with multiple participants in one chat group.
 6. **Inspect Call Health**: Monitor the quality and performance of your audio and video calls to ensure a seamless communication experience.
    </br></br>
+7. **Pagination**: Pagination will load new pages of participant, Allow users to view all participants
+
+![image info](./images/Features.png)
 
 ## Prerequisites
 
@@ -80,7 +83,8 @@ To set up Hilt in your Android project, follow these steps:
            implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
            implementation "com.google.dagger:hilt-android:2.44"
            kapt "com.google.dagger:hilt-android-compiler:2.44"
-   } ```
+   }
+ 
    ````
 
 #### Jetpack Compose:
@@ -118,7 +122,7 @@ Use the [create meeting api](https://dev.jiomeet.com/docs/JioMeet%20Platform%20S
 
 ## Configure JioMeet Template UI inside your app
 
-i. **Step 1** : Generate a Personal Access Token for GitHub 
+i. **Step 1** : Generate a Personal Access Token for GitHub
 * Settings -> Developer Settings -> Personal Access Tokens -> Generate new token
 * Make sure you select the following scopes (“ read:packages”) and Generate a token
 * After Generating make sure to copy your new personal access token. You cannot see it again! The only option is to generate a new key.
@@ -127,18 +131,18 @@ ii.  Update build.gradle inside the application module
 
 ```kotlin
     repositories {
-        maven {
-            credentials {
-                   <!--github user name-->
-                    username = ""
-                 <!--github user token-->
-                    password = ""
-            }
-            url = uri("https://maven.pkg.github.com/JioMeet/JioMeetCoreTemplateSDK_ANDROID")
+    maven {
+        credentials {
+            <!--github user name-->
+                username = ""
+            <!--github user token-->
+                password = ""
         }
-        google()
-        mavenCentral()
+        url = uri("https://maven.pkg.github.com/JioMeet/JioMeetCoreTemplateSDK_ANDROID")
     }
+    google()
+    mavenCentral()
+}
 ```
 
 iii. In Gradle Scripts/build.gradle (Module: <projectname>) add the Template UI dependency. The dependencies section should look like the following:
@@ -191,12 +195,12 @@ if (checkPermissions()) {
 ```kotlin
 private void requestCriticalPermissions() {
     ActivityCompat.requestPermissions(this,
-            new String[]{
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.CAMERA,
-                Manifest.permission.RECORD_AUDIO
-            },
-            PERMISSION_REQUEST_CODE);
+        new String[]{
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO
+        },
+        PERMISSION_REQUEST_CODE);
 
 }
 ```
@@ -239,7 +243,7 @@ class MyApplication : Application {
     android:label="@string/app_name"
     android:theme="@style/AppTheme">
     <!-- ... -->
-</application>
+    </application>
 ```
 
 ### Start your App
@@ -249,51 +253,164 @@ In /app/java/com.example.<projectname>/MainActivity, add @AndroidEntryPoint to e
 ```kotlin
    import dagger.hilt.android.AndroidEntryPoint;
 
-   @AndroidEntryPoint
-   class MainActivity : AppCompatActivity() {
-   // ...
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+    // ...
 }
 ```
 
 update onCreate to run LaunchCore() when the app starts. The updated code should like the provided code sample:
 
 ```kotlin
-   private val jioMeetConnectionListener = object : JioMeetConnectionListener {
+    private val jioMeetConnectionListener = object : JioMeetConnectionListener {
+    override fun onLeaveMeeting() {
+        finish()
+    }
 
-       override fun onShareInviteClicked(meetingId: String, meetingPin: String, name: String) {
-               Log.e("shareInviteClicked", "shareInviteClicked")
-       }
+    override fun onRemoteParticipantJoined(jmMeetingUser: JMMeetingUser) {
+        super.onRemoteParticipantJoined(jmMeetingUser)
+        Log.d("Listener onRemoteParticipantJoined", "UID: $jmMeetingUser")
+    }
 
-       override fun closeWatchParty() {
-           finish()
-       }
+    override fun onRemoteUserLeftMeeting(jmMeetingUser: JMMeetingUser) {
+        super.onRemoteUserLeftMeeting(jmMeetingUser)
+        Log.d("Listener onRemoteUserLeftMeeting", "UID: $jmMeetingUser")
+    }
 
-       override fun onAnalyticsEvent(analyticsEvent: AnalyticsEvent) {
-           Log.e("shareInviteClicked", analyticsEvent.pageName)
-       }
+    override fun onLocalJoinedRoom(jmMeetingUser: JMMeetingUser) {
+        super.onLocalJoinedRoom(jmMeetingUser)
+        Log.d("Listener onLocalJoinedRoom", "UID: 0 $jmMeetingUser")
+    }
 
-   }
+    override fun onLocalLeftRoom() {
+        super.onLocalLeftRoom()
+        Log.d("Listener onLocalLeftRoom", "onLocalLeftRoom")
+    }
+
+    override fun onLoudestParticipantIsLocalSDK(
+        isLocalParticipant: Boolean,
+        loudSpeaker: Int,
+        listActiveParticipant: List<ActiveParticipant>,
+        totalVolume: Int
+    ) {
+        super.onLoudestParticipantIsLocalSDK(
+            isLocalParticipant,
+            loudSpeaker,
+            listActiveParticipant,
+            totalVolume
+        )
+        Log.d("Listener onLoudestParticipantIsLocalSDK", "onLoudestParticipantIsLocalSDK")
+
+    }
+
+    override fun onShareInviteClicked(meetingId: String, meetingPin: String, name: String) {
+        super.onShareInviteClicked(meetingId, meetingPin, name)
+        Log.d("Listener onShareInviteClicked", "onShareInviteClicked")
+    }
+
+    override fun isUserSpeakingWhileMute(isUserSpeaking: Boolean) {
+        super.isUserSpeakingWhileMute(isUserSpeaking)
+        Log.d("Listener isUserSpeakingWhileMute", "isUserSpeakingWhileMute:$isUserSpeaking")
+    }
+
+    override fun onAnalyticsEvent(analyticsEvent: AnalyticsEvent) {
+        super.onAnalyticsEvent(analyticsEvent)
+        Log.d("Listener onAnalyticsEvent", "onAnalyticsEvent")
+    }
+
+    override fun onLocalAudioStateChange(isMicMuted: Boolean) {
+        super.onLocalAudioStateChange(isMicMuted)
+        Log.d("Listener onLocalAudioStateChange", "onLocalAudioStateChange: $isMicMuted")
+    }
+
+    override fun onLocalVideoStateChange(isCameraMutes: Boolean) {
+        super.onLocalVideoStateChange(isCameraMutes)
+        Log.d("Listener onLocalVideoStateChange", "onLocalVideoStateChange: $isCameraMutes")
+    }
+
+    override fun toggleScreenShare(isScreenShared: Boolean) {
+        super.toggleScreenShare(isScreenShared)
+        Log.d("Listener toggleScreenShare", "toggleScreenShare: $isScreenShared")
+    }
+
+    override fun onHostSwitchClientRole(isMovedToAudience: Boolean,jmMeetingUser: JMMeetingUser) {
+        super.onHostSwitchClientRole(isMovedToAudience,jmMeetingUser)
+        Log.d("Listener onHostSwitchClientRole", "onHostSwitchClientRole: $isMovedToAudience")
+    }
+
+    override fun onHostRemoveParticipant() {
+        super.onHostRemoveParticipant()
+        Log.d("Listener onHostRemoveParticipant", "onHostRemoveParticipant: ")
+    }
+
+    override fun onHandRaised(isHandRaised: Boolean,jmMeetingUser: JMMeetingUser) {
+        super.onHandRaised(isHandRaised,jmMeetingUser)
+        Log.d("Listener onHandRaised", "onHandRaised: ")
+    }
+
+    override fun onRemoveRemoteParticipant(jmMeetingUser: JMMeetingUser) {
+        Log.d("Listener onRemoveRemoteParticipant", "onRemoveRemoteParticipant: $jmMeetingUser")
+    }
+
+
+    override fun onErrorFromSDK(error: String) {
+        super.onErrorFromSDK(error)
+        Log.d("Listener onErrorFromSDK", "onErrorFromSDK: ")
+    }
+
+    override fun onSwitchRemoteClientRole(
+        isMovedToAudience: Boolean,
+        jmMeetingUser: JMMeetingUser
+    ) {
+        super.onSwitchRemoteClientRole(isMovedToAudience, jmMeetingUser)
+        Log.d(
+            "Listener onSwitchRemoteClientRole",
+            "onSwitchRemoteClientRole: $isMovedToAudience uid:$jmMeetingUser"
+        )
+    }
+
+}
 
 override fun onCreate(savedInstanceState: Bundle?) {
-       super.onCreate(savedInstanceState)
-       setContent {
-           val joinCallIntent = Intent()
-           joinCallIntent.putExtra(
-               JioMeetSdkManager.MEETING_ID,
-               "" //Add meeting id here
-           )
-           joinCallIntent.putExtra(
-               JioMeetSdkManager.MEETING_PIN,
-               "" // Add meeting password here
-           )
-           joinCallIntent.putExtra(JioMeetSdkManager.GUEST_NAME, "guestName")
-           LaunchCore(
-               intent = joinCallIntent,
-               jioMeetConnectionListener = jioMeetConnectionListener
-           )
-       }
-   }
-```
+    super.onCreate(savedInstanceState)
+
+    val joinMeetingData = JMJoinMeetingData(
+        meetingId: "8591303436",
+        meetingPin: "KkMK1",
+        displayName: "John wick")
+
+    val jmJoinMeetingConfig = JMJoinMeetingConfig(
+        userRole = userRole, //  // Specify the user role using JMUserRole (e.g., Host("host-token"), Speaker, Audience)
+        isInitialAudioOn = true,
+        isInitialVideoOn = true
+    )
+
+
+    setContent {
+        val joinCallIntent = Intent()
+        joinCallIntent.putExtra(
+            JioMeetSdkManager.MEETING_ID,
+            "meetingID"
+        )
+        joinCallIntent.putExtra(
+            JioMeetSdkManager.MEETING_PIN,
+            "meetingPin"
+        )
+        joinCallIntent.putExtra(JioMeetSdkManager.GUEST_NAME, "guestName")
+        joinCallIntent.putExtra(
+            JioMeetSdkManager.HOST_TOKEN,
+            "hostToken"
+        )
+        isUserJoined = true
+        LaunchCore(
+            intent = joinCallIntent,
+            jioMeetConnectionListener = jioMeetConnectionListener,
+            jmJoinMeetingConfig,
+            jmJoinMeetingData
+        )
+    }
+}
+   ```
 
 The JioMeetConnectionListener interface allows you to receive important events and callbacks related to a Jio-Meet session. You can implement this interface to handle various events that occur during a meeting, such as participants joining or leaving, errors, analytics events, and more. Below are the available callbacks, use can use these callbacks to implement custom behaviour
 
@@ -303,10 +420,10 @@ The JioMeetConnectionListener interface allows you to receive important events a
       // Implement custom behavior for sharing meeting details
   }
   ```
-- **_closeWatchParty_**()
+- **_leaveMeeting_**()
   ```Kotlin
-  override fun closeWatchParty() {
-      finish() // Close the activity when watch party is closed
+  override fun onLeaveMeeting() {
+      finish() // Close the meeting 
   }
   ```
 - **_onAnalyticsEvent_**(analyticsEvent: AnalyticsEvent)

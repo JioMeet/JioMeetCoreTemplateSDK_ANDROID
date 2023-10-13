@@ -401,7 +401,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
             JioMeetSdkManager.HOST_TOKEN,
             "hostToken"
         )
-        isUserJoined = true
+
         LaunchCore(
             intent = joinCallIntent,
             jioMeetConnectionListener = jioMeetConnectionListener,

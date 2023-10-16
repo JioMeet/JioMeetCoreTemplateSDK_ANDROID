@@ -24,7 +24,7 @@
 
 In this documentation, we'll guide you through the process of installation, enabling you to enhance your Android app with Jiomeet's real-time communication capabilities swiftly and efficiently.Let's get started on your journey to creating seamless communication experiences with Jiomeet Template UI!
 
-![image info](./images/JioMeetTemplateUi.png)
+![image info](./images/jiomeet_template.png)
 
 ---
 

@@ -7,16 +7,16 @@
 1. [Introduction](#introduction)
 2. [Features](#features)
 3. [Prerequisites](#prerequisites)
-    - [Hilt](#hilt)
-    - [Jetpack Compose](#jetpack-compose)
+   - [Hilt](#hilt)
+   - [Jetpack Compose](#jetpack-compose)
 4. [Setup](#setup)
-    - [Register on JioMeet Platform](#register-on-jiomeet-platform)
-    - [Get Your Application Keys](#get-your-application-keys)
-    - [Get Your JioMeet Meeting ID and PIN](#get-your-jiomeet-meeting-id-and-pin)
+   - [Register on JioMeet Platform](#register-on-jiomeet-platform)
+   - [Get Your Application Keys](#get-your-application-keys)
+   - [Get Your JioMeet Meeting ID and PIN](#get-your-jiomeet-meeting-id-and-pin)
 5. [Configure JioMeet Template UI Inside Your App](#configure-jiomeet-template-ui-inside-your-app)
-    - [Add permissions for network and device access](#add-permissions-for-network-and-device-access)
-    - [Initiliazing Hilt in Application Class](#initialize-hilt-in-application-class)
-    - [Start Your App](#start-your-app)
+   - [Add permissions for network and device access](#add-permissions-for-network-and-device-access)
+   - [Initiliazing Hilt in Application Class](#initialize-hilt-in-application-class)
+   - [Start Your App](#start-your-app)
 6. [Sample App](#sample-app)
 7. [Troubleshooting](#troubleshooting)
 
@@ -65,7 +65,7 @@ To set up Hilt in your Android project, follow these steps:
 
 2. Add the Hilt dependencies to the app-level build.gradle file
 
-   ````gradle
+   ```gradle
    plugins {
      kotlin("kapt")
      id("com.google.dagger.hilt.android")
@@ -84,8 +84,8 @@ To set up Hilt in your Android project, follow these steps:
            implementation "com.google.dagger:hilt-android:2.44"
            kapt "com.google.dagger:hilt-android-compiler:2.44"
    }
- 
-   ````
+
+   ```
 
 #### Jetpack Compose:
 
@@ -123,11 +123,12 @@ Use the [create meeting api](https://dev.jiomeet.com/docs/JioMeet%20Platform%20S
 ## Configure JioMeet Template UI inside your app
 
 i. **Step 1** : Generate a Personal Access Token for GitHub
-* Settings -> Developer Settings -> Personal Access Tokens -> Generate new token
-* Make sure you select the following scopes (“ read:packages”) and Generate a token
-* After Generating make sure to copy your new personal access token. You cannot see it again! The only option is to generate a new key.
 
-ii.  Update build.gradle inside the application module
+- Settings -> Developer Settings -> Personal Access Tokens -> Generate new token
+- Make sure you select the following scopes (“ read:packages”) and Generate a token
+- After Generating make sure to copy your new personal access token. You cannot see it again! The only option is to generate a new key.
+
+ii. Update build.gradle inside the application module
 
 ```kotlin
     repositories {
@@ -174,6 +175,34 @@ In /app/Manifests/AndroidManifest.xml, add the following permissions after </app
 <uses-permission android:name="android.permission.BLUETOOTH" />
 <!-- For Android 12 and above devices, the following permission is also required. -->
 <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+To support Screen Share add following lines in Android Manifest
+
+```gradle
+    <service
+            android:name="com.jiomeet.core.mediaEngine.agora.screenshare.impl.ScreenSharingService"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection"
+            android:process=":screensharingsvc">
+            <intent-filter>
+                <action android:name="android.intent.action.screenshare" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="org.jio.sdk.service.OnGoingScreenShareService"
+            android:foregroundServiceType="mediaProjection"
+            android:stopWithTask="false" />
+
+
+    <activity
+        android:name="com.jiomeet.core.mediaEngine.agora.screenshare.impl.ScreenCapture$ScreenCaptureAssistantActivity"
+        android:autoRemoveFromRecents="true"
+        android:excludeFromRecents="true"
+        android:process=":screensharingsvc"
+        android:screenOrientation="fullUser"
+        android:theme="@android:style/Theme.Translucent" />
 ```
 
 ### Requesting run time permissions
@@ -409,7 +438,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
         )
     }
 }
-   ```
+```
 
 The JioMeetConnectionListener interface allows you to receive important events and callbacks related to a Jio-Meet session. You can implement this interface to handle various events that occur during a meeting, such as participants joining or leaving, errors, analytics events, and more. Below are the available callbacks, use can use these callbacks to implement custom behaviour
 
@@ -422,7 +451,7 @@ The JioMeetConnectionListener interface allows you to receive important events a
 - **_leaveMeeting_**()
   ```Kotlin
   override fun onLeaveMeeting() {
-      finish() // Close the meeting 
+      finish() // Close the meeting
   }
   ```
 - **_onAnalyticsEvent_**(analyticsEvent: AnalyticsEvent)

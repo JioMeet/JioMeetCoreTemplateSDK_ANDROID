@@ -45,7 +45,7 @@ class JoinRoomActivity : ComponentActivity() {
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BaseUrl.initializedNetworkInformation(Constant.Environment.PROD)
+        BaseUrl.initializedNetworkInformation(this@JoinRoomActivity, Constant.Environment.PROD)
         joinVideoCall()
     }
 

@@ -64,8 +64,8 @@ android {
 repositories {
     maven {
         credentials {
-            username = credentials.username
-            password = credentials.password
+            username = "GIT_USERNAME"
+            password = "GIT_PASSWORD"
         }
         url = uri("https://maven.pkg.github.com/JioMeet/JioMeetCoreTemplateSDK_ANDROID")
     }
@@ -75,7 +75,7 @@ repositories {
 
 
 dependencies {
-    implementation ("com.jiomeet.platform:jiomeetcoretemplatesdk:2.3.0")
+    implementation ("com.jiomeet.platform:jiomeetcoretemplatesdk:3.0.0-SNAPSHOT")
     implementation ("androidx.core:core-ktx:1.9.0")
     testImplementation ("junit:junit:4.13.2")
     androidTestImplementation ("androidx.test.ext:junit:1.1.5")

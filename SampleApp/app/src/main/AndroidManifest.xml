@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -21,6 +22,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
+        tools:replace="android:name"
         android:name="com.example.demo.MainApplication"
         android:banner="@drawable/ic_launcher_background"
         android:icon="@mipmap/ic_launcher"
@@ -58,7 +60,29 @@
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize" />
 
+        <service
+            android:name="com.jiomeet.core.mediaEngine.agora.screenshare.impl.ScreenSharingService"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection"
+            android:process=":screensharingsvc">
+            <intent-filter>
+                <action android:name="android.intent.action.screenshare" />
+            </intent-filter>
+        </service>
 
+        <service
+            android:name="org.jio.sdk.service.OnGoingScreenShareService"
+            android:foregroundServiceType="mediaProjection"
+            android:stopWithTask="false" />
+
+
+        <activity
+            android:name="com.jiomeet.core.mediaEngine.agora.screenshare.impl.ScreenCapture$ScreenCaptureAssistantActivity"
+            android:autoRemoveFromRecents="true"
+            android:excludeFromRecents="true"
+            android:process=":screensharingsvc"
+            android:screenOrientation="fullUser"
+            android:theme="@android:style/Theme.Translucent" />
     </application>
 
 </manifest>

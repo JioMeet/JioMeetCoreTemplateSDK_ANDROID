@@ -48,11 +48,8 @@ class PermissionActivity : ComponentActivity() {
 
     private fun launchMainActivity() {
         setContent {
-            CoreLoginView(onJoinMeetingClick = {
-                val joinCallIntent = Intent(this, MainActivity::class.java)
-                startActivity(joinCallIntent)
-                finish()
-            }, viewModel = AppViewModel())
+            val joinCallIntent = Intent(this, MainActivity::class.java)
+            startActivity(joinCallIntent)
         }
     }
 

@@ -45,7 +45,7 @@ In Jiomeet Template UI, you'll find a range of powerful features designed to enh
    </br></br>
 7. **Pagination**: Pagination will load new pages of participant, Allow users to view all participants
 
-![image info](./images/Features.png)
+![image info](./images/jiomeet_template.png)
 
 ## Prerequisites
 

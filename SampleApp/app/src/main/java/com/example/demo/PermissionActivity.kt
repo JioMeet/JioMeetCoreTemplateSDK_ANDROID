@@ -50,6 +50,7 @@ class PermissionActivity : ComponentActivity() {
         setContent {
             val joinCallIntent = Intent(this, MainActivity::class.java)
             startActivity(joinCallIntent)
+            finish()
         }
     }
 

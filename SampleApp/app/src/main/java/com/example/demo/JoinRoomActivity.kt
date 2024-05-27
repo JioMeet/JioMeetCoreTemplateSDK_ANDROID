@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.jiomeet.core.CoreApplication
 import com.jiomeet.core.constant.Constant
 import com.jiomeet.core.main.models.JMJoinMeetingConfig
 import com.jiomeet.core.main.models.JMJoinMeetingData
@@ -45,7 +46,8 @@ class JoinRoomActivity : ComponentActivity() {
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BaseUrl.initializedNetworkInformation(this@JoinRoomActivity, Constant.Environment.PROD)
+        CoreApplication().recreateModules(this@JoinRoomActivity)
+        BaseUrl.initializedNetworkInformation( Constant.Environment.PROD)
         joinVideoCall()
     }
 
@@ -59,9 +61,8 @@ class JoinRoomActivity : ComponentActivity() {
                 deviceId = ""
             )
             LaunchCore(
-                intent = intent,
                 jioMeetConnectionListener = jioMeetConnectionListener,
-                jmJionMeetingConfig = jmJoinMeetingConfig,
+                jmJoinMeetingConfig = jmJoinMeetingConfig,
                 jmJoinMeetingData = jmJoinMeetingData
             )
         }
